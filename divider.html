@@ -10,60 +10,71 @@
 		}
 
 		function divide(x, y) {
-			return dividend(x, y) + " remainder " + (x % y);
-		}
+			// Exception handling
+			if (isNaN(x) || isNaN(y)) { return "Error: Please enter numbers" }
+			if (y == 0) { return "Error: Cannot divide by 0!"; }
 
-		function dividend(x, y) {
-			if (x < y) { return 0; }
+			// Break execution for boundary cases
+			if (x < y) { return "0 remainder " + x; }
+			if (x == y) { return "1 remainder 0" }
 
-			var dividend = 0;
-			var dividend_added;
+			// Result and its accumulator
+			var quotient = 0;
+			var add_to_quotient;
+
+			// Value for divisor (y) padded with trailing zeros
 			var y_padded;
+
+			// Loop counters
 			var pad_count;
 			var subtract_count;
 
-			debugger;
+			// Main loop: pad y, subtract until y_padded > x, add counts to quotient, repeat until y > x
 			while (x >= y)
 			{
-				dividend_added = "";
+				add_to_quotient = "";
 				y_padded = y.toString();
 				pad_count = 0;
 				subtract_count = 0;
 
-				debugger;
+				// Pad y_padded with trailing zeros up to one less length than x
 				while (y_padded.toString().length < (x.toString().length - 1)) {
 					y_padded += '0';
 					pad_count++;
 				}
 
-				debugger;
+				// Subtract y_padded from x until y_padded > x
 				y_padded = parseInt(y_padded);
 				while (x >= y_padded) {
 					x -= y_padded;
 					subtract_count++;
 				}
 
-				debugger;
+				// Add total subtractions to quotient accumulator
 				while (pad_count > 0) {
-					dividend_added += "0";
+					add_to_quotient += "0";
 					pad_count--;
 				}
-				dividend_added = subtract_count.toString() + dividend_added;
+				add_to_quotient = subtract_count.toString() + add_to_quotient;
 
-				debugger;
-				dividend += parseInt(dividend_added);
+				// Add accumulator to quotient
+				quotient += parseInt(add_to_quotient);
 			}
 
-			return dividend;
+			// Return result
+			return quotient + " remainder " + x;
 		}
 	</script>
 
+	<h2>Fast integer divider without muliply or divide operations</h2>
+	<h4>Note: all floating point values will be rounded down to the nearest integer.</h4>
+
 	<form>
-		<p>Enter X: </p><input type="text" id="x" value="4"><br/>
-		<p>Enter Y: </p><input type="text" id="y" value="2"><br/><br/>
-		<input type="button" id="submit" value="Submit" onclick="myFunction(x, y);"><br/>
+		<label>Enter dividend: </label><input type="text" id="x" value=""><br/>
+		<label>Enter divisor: </label><input type="text" id="y" value=""><br/><br/>
+		<input type="button" id="submit" value="Submit" onclick="myFunction(x, y);"><br/><br/>
 	</form>
 
-	<p id="output"></p>
+	<span>Quotient: </span><span id="output"></span>
 </body>
 </html>
