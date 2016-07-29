@@ -29,13 +29,14 @@
 			// Value for divisor (y) padded with trailing zeros
 			var y_padded;
 
-			// Loop counters
-			var pad_count;
+			// Loop counter
 			var subtract_count;
 
-			// Sign handling
+			// Sign handling: adds sign to result if (x XOR y) is true (one or the other ints is negative, but not both)
 			var sign = "";
-			if ((x < 0) ? !(y < 0) : (y < 0)) { sign = "-" }
+			if (!(x < 0) != !(y < 0)) { sign = "-"; }
+
+			// Makes sure all values are positive prior to main loop
 			x = Math.abs(x);
 			y = Math.abs(y);
 
@@ -44,13 +45,13 @@
 			{
 				add_to_quotient = "";
 				y_padded = y.toString();
-				pad_count = 0;
 				subtract_count = 0;
 
 				// Pad y_padded with trailing zeros up to one less length than x
+				// Add padding zeros to quotient accumulator
 				while (y_padded.toString().length < (x.toString().length - 1)) {
-					y_padded += '0';
-					pad_count++;
+					y_padded += "0";
+					add_to_quotient += "0";
 				}
 
 				// Subtract y_padded from x until y_padded > x
@@ -61,10 +62,6 @@
 				}
 
 				// Add total subtractions to quotient accumulator
-				while (pad_count > 0) {
-					add_to_quotient += "0";
-					pad_count--;
-				}
 				add_to_quotient = subtract_count.toString() + add_to_quotient;
 
 				// Add accumulator to quotient
