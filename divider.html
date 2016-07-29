@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Division without multiply/divide operators</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function myFunction() {
+			document.getElementById("output").innerHTML = divide(parseInt(document.getElementById("x").value), parseInt(document.getElementById("y").value));
+		}
+
+		function divide(x, y) {
+			return dividend(x, y) + " remainder " + (x % y);
+		}
+
+		function dividend(x, y) {
+			if (x < y) { return 0; }
+
+			var dividend = 0;
+			var dividend_added;
+			var y_padded;
+			var pad_count;
+			var subtract_count;
+
+			debugger;
+			while (x >= y)
+			{
+				dividend_added = "";
+				y_padded = y.toString();
+				pad_count = 0;
+				subtract_count = 0;
+
+				debugger;
+				while (y_padded.toString().length < (x.toString().length - 1)) {
+					y_padded += '0';
+					pad_count++;
+				}
+
+				debugger;
+				y_padded = parseInt(y_padded);
+				while (x >= y_padded) {
+					x -= y_padded;
+					subtract_count++;
+				}
+
+				debugger;
+				while (pad_count > 0) {
+					dividend_added += "0";
+					pad_count--;
+				}
+				dividend_added = subtract_count.toString() + dividend_added;
+
+				debugger;
+				dividend += parseInt(dividend_added);
+			}
+
+			return dividend;
+		}
+	</script>
+
+	<form>
+		<p>Enter X: </p><input type="text" id="x" value="4"><br/>
+		<p>Enter Y: </p><input type="text" id="y" value="2"><br/><br/>
+		<input type="button" id="submit" value="Submit" onclick="myFunction(x, y);"><br/>
+	</form>
+
+	<p id="output"></p>
+</body>
+</html>
