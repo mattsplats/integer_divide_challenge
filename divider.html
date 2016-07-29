@@ -6,7 +6,10 @@
 <body>
 	<script type="text/javascript">
 		function myFunction() {
-			document.getElementById("output").innerHTML = divide(parseInt(document.getElementById("x").value), parseInt(document.getElementById("y").value));
+			x = parseInt(document.getElementById("x").value);
+			y = parseInt(document.getElementById("y").value);
+
+			document.getElementById("output").innerHTML = divide(x, y);
 		}
 
 		function divide(x, y) {
@@ -15,8 +18,9 @@
 			if (y == 0) { return "Error: Cannot divide by 0!"; }
 
 			// Break execution for boundary cases
-			if (x < y) { return "0 remainder " + x; }
 			if (x == y) { return "1 remainder 0" }
+			if (x < y && x >= 0 && y >= 0) { return "0 remainder " + x; }
+			if (x > y && x <= 0 && y <= 0) { return "0 remainder " + x; }
 
 			// Result and its accumulator
 			var quotient = 0;
@@ -28,6 +32,12 @@
 			// Loop counters
 			var pad_count;
 			var subtract_count;
+
+			// Sign handling
+			var sign = "";
+			if ((x < 0) ? !(y < 0) : (y < 0)) { sign = "-" }
+			x = Math.abs(x);
+			y = Math.abs(y);
 
 			// Main loop: pad y, subtract until y_padded > x, add counts to quotient, repeat until y > x
 			while (x >= y)
@@ -62,7 +72,7 @@
 			}
 
 			// Return result
-			return quotient + " remainder " + x;
+			return sign + quotient + " remainder " + x;
 		}
 	</script>
 
