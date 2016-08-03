@@ -32,7 +32,7 @@
 			// Loop counter
 			var subtract_count;
 
-			// Sign handling: adds sign to result if (x XOR y) is true (one or the other ints is negative, but not both)
+			// Sign handling: adds sign to result if (x is negative XOR y is negative) is true (one or the other ints is negative, but not both)
 			var sign = "";
 			if (!(x < 0) != !(y < 0)) { sign = "-"; }
 
